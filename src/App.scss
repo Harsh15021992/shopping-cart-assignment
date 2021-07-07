@@ -1,2 +1,113 @@
-
 // App.scss file
+.layout-container {
+  width: 100%;
+  margin: 0 auto;
+}
+.row {
+  margin: 0;
+}
+.theme-button {
+  background-color: #d00256;
+  border-color: #d00256;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 10px 9px;
+  border-radius: 2px;
+  opacity: 0.8;
+  &:hover,
+  &:active,
+  &:focus {
+    opacity: 1;
+    background-color: #d00256;
+    border-color: #d00256;
+    outline: none;
+  }
+}
+.xs-hide {
+  display: none;
+}
+.xs-show {
+  display: block;
+}
+.md-hide {
+  display: none;
+}
+.md-show {
+  display: block;
+}
+
+.theme-button:not(:disabled):not(.disabled).active,
+.theme-button:not(:disabled):not(.disabled):active,
+.show > .theme-button.dropdown-toggle,
+.theme-button.focus,
+.theme-button:focus {
+  background-color: #d00256;
+  border-color: #d00256;
+  box-shadow: 0 0 0 0.2rem rgb(208 2 86 / 50%);
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+  label {
+    color: #999;
+    font-size: 1rem;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 15px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  input {
+    font-size: 1em;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid #50dae2;
+    }
+    &:focus ~ label,
+    &:valid ~ label {
+      top: -10px;
+      font-size: 0.85rem;
+      color: #50dae2;
+    }
+  }
+}
+
+.customer-authentication-page {
+  h4 {
+    margin-bottom: 25px;
+  }
+  p {
+    font-size: 0.75em;
+  }
+}
+.clear-both {
+  clear: both;
+}
+@media only screen and (min-width: 768px) {
+  .xs-hide {
+    display: block;
+  }
+  .xs-show {
+    display: none;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .layout-container {
+    width: 992px;
+  }
+  .md-hide {
+    display: block;
+  }
+  .md-show {
+    display: none;
+  }
+}

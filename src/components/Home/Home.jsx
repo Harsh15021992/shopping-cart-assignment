@@ -1,6 +1,102 @@
 import "./Home.scss";
+import { useState, useEffect } from "react";
+import { Row, Col, Carousel, Image, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import getOffers from "../../api/offers.api";
+import getProductCategories from "../../api/productCategory.api";
 
 const Home = () => {
-  return <div className="home">From Home</div>;
+  const [offers, setOffers] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!offers.length)
+      getOffers().then(({ ...res }) => {
+        const data = res.data.sort((a, b) => a.order - b.order);
+        setOffers(data);
+      });
+  }, [offers]);
+
+  useEffect(() => {
+    if (!categories.length)
+      getProductCategories().then(({ ...res }) => {
+        const data = res.data.sort((a, b) => a.order - b.order);
+        setCategories(data);
+      });
+  }, [categories]);
+
+  return (
+    <div className="layout-container">
+      <Row className="carousel-container bottom-shadow">
+        <Col>
+          <Carousel interval={1000} className="">
+            {offers.map((offer, i) => {
+              return (
+                <Carousel.Item key={i}>
+                  <img
+                    className="d-block w-100"
+                    src={process.env.PUBLIC_URL + offer.bannerImageUrl}
+                    alt={"offer + offer.order"}
+                  />
+                </Carousel.Item>
+              );
+            })}
+          </Carousel>
+        </Col>
+      </Row>
+      {categories
+        .sort((a, b) => a.order - b.order)
+        .map((category, index) => {
+          return category.order > 0 ? (
+            index % 2 !== 0 ? (
+              <Row className="category-card align-items-center" key={index}>
+                <Col xs={4} md={6} className="category-card-img">
+                  <img
+                    src={process.env.PUBLIC_URL + category.imageUrl}
+                    alt=""
+                  />
+                </Col>
+                <Col xs={8} md={6} className="category-card-detail">
+                  <h5>{category.name}</h5>
+                  <p>{category.description}</p>
+                  <Button
+                    variant="primary"
+                    className="theme-button"
+                    onClick={() => {
+                      history.push(`/products/${category.id}`);
+                    }}
+                  >
+                    Explore {category.key}
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              <Row
+                className="category-card align-items-center"
+                key={category.key}
+              >
+                <Col xs={8} md={6} className="category-card-detail">
+                  <h5>{category.name}</h5>
+                  <p>{category.description}</p>
+                  <Button
+                    variant="primary"
+                    className="theme-button"
+                    onClick={() => {
+                      history.push(`/products/${category.id}`);
+                    }}
+                  >
+                    Explore {category.key}
+                  </Button>
+                </Col>
+                <Col xs={4} md={6} className="category-card-img">
+                  <Image src={"./../.." + category.imageUrl} fluid />
+                </Col>
+              </Row>
+            )
+          ) : null;
+        })}
+    </div>
+  );
 };
 export default Home;

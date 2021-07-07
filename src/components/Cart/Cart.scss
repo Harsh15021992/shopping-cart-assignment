@@ -1,1 +1,85 @@
 // Cart.scss file
+.modal-dialog {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  margin: 0px;
+  .modal-content {
+    border-radius: 0px;
+    border: 0px;
+    height: calc(100vh - 60px);
+  }
+  .modal-header {
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: 0;
+    .h4 {
+      font-size: 1rem;
+      span {
+        font-weight: normal;
+        font-size: 0.75rem;
+      }
+    }
+    button {
+      color: #ffffff;
+      opacity: 1;
+      font-weight: normal;
+    }
+  }
+  .modal-body {
+    padding: 0px;
+    background-color: #e8e8e8;
+    padding-top: 5px;
+    max-height: calc(100vh - 210px);
+    overflow: auto;
+    .cart-item {
+      margin-bottom: 5px;
+      background-color: #ffffff;
+      .img-thumbnail {
+        border: 0;
+      }
+      h5 {
+        margin-top: 15px;
+        font-size: 0.9rem;
+      }
+      .theme-button {
+        border-radius: 50%;
+        height: 20px;
+        width: 20px;
+        padding: 0;
+        margin-right: 10px;
+      }
+      span {
+        font-size: 0.85rem;
+        margin-right: 10px;
+      }
+      span.total {
+        float: right;
+      }
+    }
+  }
+  .modal-footer {
+    justify-content: inherit;
+    p {
+      text-align: center;
+      width: 100%;
+      font-size: 0.75rem;
+    }
+    .theme-button {
+      span:first-child {
+        float: left;
+      }
+      span:last-child {
+        float: right;
+      }
+    }
+  }
+}
+
+// @media only screen and (min-width: 768px) {
+//   .modal-dialog {
+//     .modal-content {
+//       height: calc(100vh - 60px);
+//     }
+//   }
+// }
