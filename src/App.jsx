@@ -1,13 +1,20 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from "react";
+import ShoppingProvider from "./context/shopping.state";
+import Loader from "./components/Loader/Loader";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
-import Product from "./components/Product/Product";
-import Home from "./components/Home/Home";
-import Cart from "./components/Cart/Cart";
 import "./App.scss";
+
+const Home = lazy(() => import("./components/Home/Home"));
+const Product = lazy(() => import("./components/Product/Product"));
+const Cart = lazy(() => import("./components/Cart/Cart"));
+const Register = lazy(() => import("./components/Register/Register"));
+const Login = lazy(() => import("./components/Login/Login"));
+
+
+
 
 function App() {
   const [show, setShow] = useState(false);
@@ -15,33 +22,38 @@ function App() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
-    <Router>
-      <div>
-        <Cart show={show} handleClose={handleClose} />
-        <Header handleShow={handleShow} />
-        <main>
-          <Switch>
-            <Route
-              exact
-              path="/register"
-              render={(props) => <Register {...props} />}
-            />
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route
-              exact
-              path="/products/:productCategory"
-              render={(props) => <Product {...props} />}
-            />
-            <Route exact path={["/", "/home"]}>
-              <Home />
-            </Route>
-          </Switch>
-        </main>
-        <Footer />
+    <ShoppingProvider>
+      <Router>
+        <div>
+          <Suspense fallback={ <Loader/> }>
+            <Cart show={show} handleClose={handleClose} />
+            <Header handleShow={handleShow} />
+            <main>
+            <Switch>
+              <Route
+                exact
+                path="/register"
+                render={(props) => <Register {...props} />}
+              />
+              <Route exact path="/login">
+                <Login />
+              </Route>
+              <Route
+                exact
+                path="/products/:productCategory"
+                render={(props) => <Product {...props} />}
+              />
+              <Route exact path={["/", "/home"]}>
+                <Home />
+              </Route>
+              
+            </Switch>
+            </main>
+            <Footer />
+          </Suspense>
       </div>
-    </Router>
+      </Router>
+    </ShoppingProvider>
   );
 }
 

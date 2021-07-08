@@ -1,30 +1,21 @@
 import "./Home.scss";
-import { useState, useEffect } from "react";
+import {  useEffect, useContext } from "react";
 import { Row, Col, Carousel, Image, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import getOffers from "../../api/offers.api";
-import getProductCategories from "../../api/productCategory.api";
+import shoppingContext from '../../context/shopping.context';
 
 const Home = () => {
-  const [offers, setOffers] = useState([]);
-  const [categories, setCategories] = useState([]);
   const history = useHistory();
+  const shoppingData = useContext(shoppingContext);
+  const { offers, categories, updateOffers, updateCategories } = shoppingData;
 
   useEffect(() => {
-    if (!offers.length)
-      getOffers().then(({ ...res }) => {
-        const data = res.data.sort((a, b) => a.order - b.order);
-        setOffers(data);
-      });
-  }, [offers]);
-
-  useEffect(() => {
-    if (!categories.length)
-      getProductCategories().then(({ ...res }) => {
-        const data = res.data.sort((a, b) => a.order - b.order);
-        setCategories(data);
-      });
-  }, [categories]);
+    if(!offers.length)
+      updateOffers();
+    if(!categories.length)
+      updateCategories();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="layout-container">
@@ -96,7 +87,7 @@ const Home = () => {
             )
           ) : null;
         })}
-    </div>
+      </div>
   );
 };
 export default Home;

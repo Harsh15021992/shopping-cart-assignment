@@ -1,6 +1,6 @@
 // Product.scss file
 .left-nav-container,
-.right-nav-container {
+.product-section-container {
   padding: 0 0 0 15px;
 }
 .card {
@@ -75,6 +75,9 @@
   width: calc(100% - 15px);
   margin: 20px 15px 0 0;
 }
+.product-section-wrapper {
+  padding-left: 0;
+}
 @media screen and (min-width: 768px) {
   .card {
     &.brb-1-dashed {
@@ -85,5 +88,25 @@
   .no-data-alert {
     width: auto;
     margin: 0;
+  }
+  .product-section-wrapper {
+    padding: 0 10px 0 10px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .product-page {
+    max-width: 992px;
+    width: 100%;
+  }
+  .left-nav-container,
+  .product-section-container {
+    padding: 0;
+    .no-data-alert {
+      margin-left: 15px;
+    }
+  }
+  .product-section-wrapper {
+    padding-right: 0;
   }
 }

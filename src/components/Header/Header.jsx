@@ -1,14 +1,20 @@
 import "./Header.scss";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import shoppingContext from "../../context/shopping.context";
 import logo from "./../../static/images/logo_2x.png";
-import cart from "./../../static/images/cart.svg";
+import cartImg from "./../../static/images/cart.svg";
 
 const Header = ({ handleShow }) => {
+  const shoppingData = useContext(shoppingContext);
+  const { cart } = shoppingData;
   return (
     <header className="header">
       <div className="layout-container">
         <div className="logo-container">
-          <img src={logo} alt="sabka baazar logo" />
+          <Link to="/">
+            <img src={logo} alt="sabka baazar logo" />
+          </Link>
         </div>
         <div className="product-nav-container">
           <Link to="/home">Home</Link>
@@ -21,7 +27,12 @@ const Header = ({ handleShow }) => {
           </div>
           <div className="cart-container">
             <button className="cart-button" onClick={handleShow}>
-              <img src={cart} className="cart-icon" alt="" /> 0 items
+              <img src={cartImg} className="cart-icon" alt="" />
+              {cart.reduce(
+                (accumulator, item) => accumulator + item.count,
+                0
+              )}{" "}
+              items
             </button>
           </div>
         </div>

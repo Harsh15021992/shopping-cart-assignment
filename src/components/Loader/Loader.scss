@@ -1,0 +1,9 @@
+.loader-container {
+    height: 100vh;
+    position: relative;
+    text-align: center;
+    .spinner-border {
+        position: absolute;
+        top: 45%;
+    }
+}

@@ -1,6 +1,7 @@
 import "./Product.scss";
+import { useState, useEffect, useContext } from "react";
+import shoppingContext from "../../context/shopping.context";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -11,42 +12,40 @@ import {
   DropdownButton,
   Dropdown,
 } from "react-bootstrap";
-import getProductCategories from "../../api/productCategory.api";
-import getProducts from "../../api/products.api";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [productList, setProductList] = useState([]);
+
+  const shoppingData = useContext(shoppingContext);
+  const {
+    products,
+    categories,
+    cart,
+    updateProducts,
+    updateCategories,
+    updateCart,
+  } = shoppingData;
 
   useEffect(() => {
-    if (!categories.length)
-      getProductCategories().then(({ ...res }) => {
-        const data = res.data.sort((a, b) => a.order - b.order);
-        setCategories(data);
-      });
-  }, [categories]);
+    if (!categories.length) updateCategories();
+    if (!products.length) updateProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    if (!productList.length)
-      getProducts().then(({ ...res }) => {
-        const data = res.data.sort((a, b) => a.order - b.order);
-        setProductList(data);
-      });
-  }, [productList]);
-
-  useEffect(() => {
-    if (match.params.productCategory === "all") {
-      setProduct((prevProduct) => productList);
-    } else {
-      setProduct((prevProduct) =>
-        productList.filter(
-          (prod) => prod.category === match.params.productCategory
-        )
-      );
+    if (products.length !== 0) {
+      if (match.params.productCategory === "all") {
+        setProduct(products);
+      } else {
+        setProduct(() =>
+          products.filter(
+            (prod) => prod.category === match.params.productCategory
+          )
+        );
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [match.params.productCategory]);
+  }, [match.params.productCategory, products]);
 
   const ProductCategory = () => {
     return (
@@ -54,11 +53,15 @@ const Product = ({ match }) => {
         <Card style={{ width: "100%" }} className="xs-hide left-nav">
           <ListGroup variant="flush">
             {categories.map((catList) => {
-              return (
-                <ListGroup.Item key={catList.key}>
-                  <Link to={`/products/${catList.id}`}>{catList.name}</Link>
-                </ListGroup.Item>
-              );
+              if (catList.order > 0) {
+                return (
+                  <ListGroup.Item key={catList.key}>
+                    <Link to={`/products/${catList.id}`}>{catList.name}</Link>
+                  </ListGroup.Item>
+                );
+              } else {
+                return null;
+              }
             })}
           </ListGroup>
         </Card>
@@ -78,20 +81,28 @@ const Product = ({ match }) => {
       </>
     );
   };
-  const ProductLayout = ({
-    name,
-    imageURL,
-    description,
-    price,
-    stock,
-    category,
-    sku,
-    id,
-    imageUrl,
-    key,
-  }) => {
+  const ProductLayout = ({ item }) => {
+    const { name, imageURL, description, price, id } = item;
+    const buyItem = () => {
+      let index = -1;
+      cart.filter((item, i) => {
+        if (item.id === id) {
+          index = i;
+          return 1;
+        }
+        return 0;
+      });
+      let newCart = [...cart];
+      if (index !== -1) {
+        newCart[index]["count"] += 1;
+      } else {
+        item["count"] = 1;
+        newCart.push(item);
+      }
+      updateCart(newCart);
+    };
     return (
-      <Col lg={3} md={6} sm={12} className=" pl-0" key={key}>
+      <Col lg={3} md={6} sm={12} className="product-section-wrapper">
         <Card className="brb-1-dashed">
           <Card.Body>
             <Card.Title>{name}</Card.Title>
@@ -105,12 +116,17 @@ const Product = ({ match }) => {
             <Card.Text>{description}</Card.Text>
             <div>
               <p className="card-price md-hide">MRP Rs.{price}</p>
-              <Button variant="primary" className="theme-button md-hide">
+              <Button
+                variant="primary"
+                className="theme-button md-hide"
+                onClick={buyItem}
+              >
                 Buy Now
               </Button>
               <Button
                 variant="primary"
                 className="theme-button md-show prod-button-price"
+                onClick={buyItem}
               >
                 Buy Now @ Rs.{price}
               </Button>
@@ -122,16 +138,16 @@ const Product = ({ match }) => {
   };
 
   return (
-    <div className="product-page">
+    <div className="product-page layout-container">
       <Row>
-        <Col md={3} className="bg-col-e8e8e8 left-nav-container">
+        <Col md={3} sm={12} className="bg-col-e8e8e8 left-nav-container">
           <ProductCategory />
         </Col>
-        <Col lg={9} md={9} sm={12} className="right-nav-container">
+        <Col md={9} sm={12} className="product-section-container">
           <Row lg={9} md={12} sm={12}>
             {product.length ? (
               product.map((prod, index) => {
-                return <ProductLayout {...prod} key={index} />;
+                return <ProductLayout item={prod} key={index} />;
               })
             ) : (
               <Alert variant="info" className="no-data-alert">
