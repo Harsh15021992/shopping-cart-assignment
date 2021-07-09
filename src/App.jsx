@@ -13,45 +13,38 @@ const Cart = lazy(() => import("./components/Cart/Cart"));
 const Register = lazy(() => import("./components/Register/Register"));
 const Login = lazy(() => import("./components/Login/Login"));
 
-
-
-
 function App() {
   const [show, setShow] = useState(false);
-  // const [banners, setBanners] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <ShoppingProvider>
       <Router>
         <div>
-          <Suspense fallback={ <Loader/> }>
+          <Suspense fallback={<Loader />}>
             <Cart show={show} handleClose={handleClose} />
             <Header handleShow={handleShow} />
             <main>
-            <Switch>
-              <Route
-                exact
-                path="/register"
-                render={(props) => <Register {...props} />}
-              />
-              <Route exact path="/login">
-                <Login />
-              </Route>
-              <Route
-                exact
-                path="/products/:productCategory"
-                render={(props) => <Product {...props} />}
-              />
-              <Route exact path={["/", "/home"]}>
-                <Home />
-              </Route>
-              
-            </Switch>
+              <Switch>
+                <Route exact path="/register">
+                  <Register />
+                </Route>
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+                <Route
+                  exact
+                  path="/products/:productCategory"
+                  render={(props) => <Product {...props} />}
+                />
+                <Route exact path={["/", "/home"]}>
+                  <Home />
+                </Route>
+              </Switch>
             </main>
             <Footer />
           </Suspense>
-      </div>
+        </div>
       </Router>
     </ShoppingProvider>
   );

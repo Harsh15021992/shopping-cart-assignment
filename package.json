@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "jest": "^26.6.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-dom": "^17.0.2",
@@ -18,8 +19,26 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll --no-cache",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "json",
+      "clover",
+      "text",
+      "lcov",
+      "text-summary",
+      "html"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "junit"
   },
   "eslintConfig": {
     "extends": [
@@ -40,8 +59,12 @@
     ]
   },
   "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^7.0.1",
+    "jest-junit": "^12.2.0",
+    "react-test-renderer": "^17.0.2",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0"
   }

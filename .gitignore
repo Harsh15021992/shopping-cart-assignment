@@ -17,6 +17,9 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# snapshot directories
+**/*/__snapshots__
+
 # nyc test coverage
 .nyc_output
 
