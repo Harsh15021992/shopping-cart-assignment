@@ -26,7 +26,8 @@
     "collectCoverageFrom": [
       "src/**/*.js",
       "src/**/*.jsx",
-      "!src/index.js"
+      "!src/index.js",
+      "!src/reportWebVitals.js"
     ],
     "coverageReporters": [
       "json",

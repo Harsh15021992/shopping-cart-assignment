@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./Home";
+import Cart from "./Cart";
 import ShallowRenderer from "react-test-renderer/shallow";
 
 let realUseContext;
@@ -67,9 +67,9 @@ afterEach(() => {
   React.useContext = realUseContext;
 });
 
-it("Home Component test", () => {
+it("Cart with mock useContext hook", () => {
   useContextMock.mockReturnValue(sampleContextData);
-  const element = new ShallowRenderer().render(<Home />);
+  const element = new ShallowRenderer().render(<Cart />);
   expect(element).toBeTruthy();
   expect(element).toMatchSnapshot();
 });

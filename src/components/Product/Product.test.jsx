@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "./Home";
+import Product from "./Product";
 import ShallowRenderer from "react-test-renderer/shallow";
 
 let realUseContext;
@@ -67,9 +67,13 @@ afterEach(() => {
   React.useContext = realUseContext;
 });
 
-it("Home Component test", () => {
+it("Product with mock useContext hook", () => {
   useContextMock.mockReturnValue(sampleContextData);
-  const element = new ShallowRenderer().render(<Home />);
+  const element = new ShallowRenderer().render(
+    <Product
+      match={{ params: { productCategory: "5b6899953d1a866534f516e2" } }}
+    />
+  );
   expect(element).toBeTruthy();
   expect(element).toMatchSnapshot();
 });
