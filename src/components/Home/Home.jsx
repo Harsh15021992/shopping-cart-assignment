@@ -1,8 +1,8 @@
 import "./Home.scss";
-import {  useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Row, Col, Carousel, Image, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import shoppingContext from '../../context/shopping.context';
+import shoppingContext from "../../context/shopping.context";
 
 const Home = () => {
   const history = useHistory();
@@ -10,11 +10,9 @@ const Home = () => {
   const { offers, categories, updateOffers, updateCategories } = shoppingData;
 
   useEffect(() => {
-    if(!offers.length)
-      updateOffers();
-    if(!categories.length)
-      updateCategories();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!offers.length) updateOffers();
+    if (!categories.length) updateCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -53,7 +51,7 @@ const Home = () => {
                   <p>{category.description}</p>
                   <Button
                     variant="primary"
-                    className="theme-button"
+                    className="theme-button explore-right-button"
                     onClick={() => {
                       history.push(`/products/${category.id}`);
                     }}
@@ -72,7 +70,7 @@ const Home = () => {
                   <p>{category.description}</p>
                   <Button
                     variant="primary"
-                    className="theme-button"
+                    className="theme-button explore-left-button"
                     onClick={() => {
                       history.push(`/products/${category.id}`);
                     }}
@@ -87,7 +85,7 @@ const Home = () => {
             )
           ) : null;
         })}
-      </div>
+    </div>
   );
 };
 export default Home;

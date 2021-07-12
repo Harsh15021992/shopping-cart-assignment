@@ -27,6 +27,7 @@
       "src/**/*.js",
       "src/**/*.jsx",
       "!src/index.js",
+      "!src/context/**/*.js",
       "!src/reportWebVitals.js"
     ],
     "coverageReporters": [

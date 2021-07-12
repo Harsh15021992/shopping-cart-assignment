@@ -1,6 +1,5 @@
 import React from "react";
-import Product from "./Product";
-import ShallowRenderer from "react-test-renderer/shallow";
+import ProductCategory from "./ProductCategory";
 import Adapter from "enzyme-adapter-react-16";
 import { shallow, configure } from "enzyme";
 
@@ -9,6 +8,16 @@ configure({ adapter: new Adapter() });
 let realUseContext;
 let useContextMock;
 let useEffect;
+const sampleEmptyContextData = {
+  offers: [],
+  categories: [],
+  products: [],
+  cart: [],
+  updateOffers: () => {},
+  updateCategories: () => {},
+  updateProducts: () => {},
+  updateCart: () => {},
+};
 const sampleContextData = {
   offers: [
     {
@@ -28,6 +37,14 @@ const sampleContextData = {
       order: 1,
       imageUrl: "/static/images/category/fruits.png",
       id: "5b6899953d1a866534f516e2",
+    },
+    {
+      name: "Seafood",
+      key: "seafood",
+      description: "Great place to buy fresh seafood.",
+      enabled: false,
+      order: -1,
+      id: "5b68997d3d1a866534f516e1",
     },
   ],
   products: [
@@ -62,16 +79,6 @@ const sampleContextData = {
   updateProducts: () => {},
   updateCart: () => {},
 };
-const sampleEmptyContextData = {
-  offers: [],
-  categories: [],
-  products: [],
-  cart: [],
-  updateOffers: () => {},
-  updateCategories: () => {},
-  updateProducts: () => {},
-  updateCart: () => {},
-};
 
 const mockUseEffect = () => {
   useEffect.mockImplementationOnce((f) => f());
@@ -82,36 +89,23 @@ beforeEach(() => {
   useContextMock = React.useContext = jest.fn();
   useEffect = jest.spyOn(React, "useEffect");
   mockUseEffect();
-  mockUseEffect();
 });
+
 // Cleanup mock
 afterEach(() => {
   React.useContext = realUseContext;
 });
-describe("Product Component Test suit", () => {
-  it("Product with all productCategory without any prefetched data", () => {
+
+describe("ProductCategory Component Test suit", () => {
+  it("ProductCategory without any prefetched data", () => {
     useContextMock.mockReturnValue(sampleEmptyContextData);
-    const element = new ShallowRenderer().render(
-      <Product match={{ params: { productCategory: "all" } }} />
-    );
+    const element = shallow(<ProductCategory />);
     expect(element).toBeTruthy();
   });
 
-  it("Product with all productCategory", () => {
+  it("ProductCategory should render and match with snapshot", () => {
     useContextMock.mockReturnValue(sampleContextData);
-    const element = new ShallowRenderer().render(
-      <Product match={{ params: { productCategory: "all" } }} />
-    );
-    expect(element).toBeTruthy();
-  });
-
-  it("Product with particular productCategory", () => {
-    useContextMock.mockReturnValue(sampleContextData);
-    const element = shallow(
-      <Product
-        match={{ params: { productCategory: "5b6899953d1a866534f516e2" } }}
-      />
-    );
+    const element = shallow(<ProductCategory />);
     expect(element).toBeTruthy();
     expect(element).toMatchSnapshot();
   });

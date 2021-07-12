@@ -12,12 +12,12 @@ const Login = () => {
         </Col>
         <Col md={4}>
           <Form>
-            <div class="input-group">
-              <input type="email" required />
+            <div className="input-group">
+              <input type="text" required />
               <label>Email</label>
             </div>
 
-            <div class="input-group">
+            <div className="input-group">
               <input type="password" required />
               <label>Password</label>
             </div>

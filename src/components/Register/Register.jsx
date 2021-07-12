@@ -12,23 +12,23 @@ const Register = () => {
         </Col>
         <Col md={4}>
           <Form>
-            <div class="input-group">
+            <div className="input-group">
               <input type="text" required />
               <label>First Name</label>
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <input type="text" required />
               <label>Last Name</label>
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <input type="email" required />
               <label>Email</label>
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <input type="password" required />
               <label>Password</label>
             </div>
-            <div class="input-group">
+            <div className="input-group">
               <input type="password" required />
               <label>Confirm Password</label>
             </div>
