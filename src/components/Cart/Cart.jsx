@@ -30,7 +30,7 @@ const Cart = ({ show, handleClose }) => {
           <h5>{item.name}</h5>
           <Button
             variant="primary"
-            className="theme-button"
+            className="theme-button decrease-count"
             onClick={() => updateItem("decrease")}
           >
             -
@@ -38,7 +38,7 @@ const Cart = ({ show, handleClose }) => {
           <span>{item.count}</span>
           <Button
             variant="primary"
-            className="theme-button"
+            className="theme-button increase-count"
             onClick={() => updateItem("increase")}
           >
             +

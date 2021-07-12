@@ -8,6 +8,8 @@ import cartImg from "./../../static/images/cart.svg";
 const Header = ({ handleShow }) => {
   const shoppingData = useContext(shoppingContext);
   const { cart } = shoppingData;
+  const openCart = () => handleShow();
+
   return (
     <header className="header">
       <div className="layout-container">
@@ -26,7 +28,7 @@ const Header = ({ handleShow }) => {
             <Link to="/register">Register</Link>
           </div>
           <div className="cart-container">
-            <button className="cart-button" onClick={handleShow}>
+            <button className="cart-button" onClick={openCart}>
               <img src={cartImg} className="cart-icon" alt="" />
               {cart.reduce(
                 (accumulator, item) => accumulator + item.count,
