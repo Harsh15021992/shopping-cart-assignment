@@ -1,8 +1,9 @@
 import "./Cart.scss";
 import { useContext } from "react";
-import { Container, Modal, Button } from "react-bootstrap";
+import { Container, Modal, Button, Row, Col, Image } from "react-bootstrap";
 import shoppingContext from "../../context/shopping.context";
 import CartItem from "./CartItem";
+import LowPriceImage from "./../../static/images/lowest-price.png";
 
 const Cart = ({ show, handleClose }) => {
   const shoppingData = useContext(shoppingContext);
@@ -32,6 +33,16 @@ const Cart = ({ show, handleClose }) => {
               </p>
               <p>Your favourite items are just a click away</p>
             </div>
+          )}
+          {cart.length && (
+            <Row className="lowest-price">
+              <Col xs={3}>
+                <Image src={LowPriceImage} thumbnail />
+              </Col>
+              <Col xs={9}>
+                <p>You won't find it cheaper anywhere</p>
+              </Col>
+            </Row>
           )}
         </Container>
       </Modal.Body>

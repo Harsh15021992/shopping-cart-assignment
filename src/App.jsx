@@ -37,7 +37,7 @@ function App() {
                   path="/products/:productCategory"
                   render={(props) => <Product {...props} />}
                 />
-                <Route exact path={["/", "/home"]}>
+                <Route path={["/", "/home"]}>
                   <Home />
                 </Route>
               </Switch>

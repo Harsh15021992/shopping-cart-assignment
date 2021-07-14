@@ -58,6 +58,21 @@
         float: right;
       }
     }
+    .lowest-price {
+      padding: 5px;
+      border-radius: 5px;
+      background-color: #fff;
+      div {
+        align-self: center;
+        img {
+          border: none;
+        }
+        p {
+          font-size: 0.85rem;
+          margin: 0;
+        }
+      }
+    }
   }
   .noItem-cart-modal-body {
     display: table;
