@@ -79,7 +79,10 @@ const Home = () => {
                   </Button>
                 </Col>
                 <Col xs={4} md={6} className="category-card-img">
-                  <Image src={"./../.." + category.imageUrl} fluid />
+                  <Image
+                    src={process.env.PUBLIC_URL + category.imageUrl}
+                    fluid
+                  />
                 </Col>
               </Row>
             )
